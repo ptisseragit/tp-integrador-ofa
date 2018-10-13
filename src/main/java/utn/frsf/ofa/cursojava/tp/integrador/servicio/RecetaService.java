@@ -28,9 +28,9 @@ public class RecetaService {
     private RecetaLogica logica;
     
     public Receta guardar(Receta r){        
-        if(!logica.autorPuedeCrearReceta(r)) throw new RuntimeException("La receta no puede ser creada. El autor creo el maximo de recetas. Verifique los datos"); 
-        if(!logica.puedeAgregarIngredientes(r)) throw new RuntimeException("La receta no puede ser creada. Excede la cantidad maxima de ingredientes"); 
-        if(!logica.costoIngredientesValido(r)) throw new RuntimeException("La receta no puede ser creada. El monto de los ingredientes supera el maximo"); 
+        //if(!logica.autorPuedeCrearReceta(r)) throw new RuntimeException("La receta no puede ser creada. El autor creo el maximo de recetas. Verifique los datos"); 
+        //if(!logica.puedeAgregarIngredientes(r)) throw new RuntimeException("La receta no puede ser creada. Excede la cantidad maxima de ingredientes"); 
+        //if(!logica.costoIngredientesValido(r)) throw new RuntimeException("La receta no puede ser creada. El monto de los ingredientes supera el maximo"); 
         if(r.getId()!=null && r.getId()>0) {
                 return em.merge(r);
         }
@@ -51,6 +51,17 @@ public class RecetaService {
     }
     
     public List<Receta> busquedaAvanzada(AutorService a, Ingrediente i, Double precioMin, Double precioMax,Date fMin,Date fMax){        
+        
+        //a. Precio mínimo y máximo
+        //b. Fecha inicial y final de creación de receta
+        //c. Autor
+        //d. Ingrediente
+        
+        /*return em.createQuery("SELECT i FROM Receta r JOIN r.ingredientes i WHERE r.id = :P_ID_RECETA")
+                .setParameter("P_ID_RECETA", id)
+                .getResultList();*/
+        
+        
         return null;
     }
 

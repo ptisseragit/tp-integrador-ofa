@@ -25,6 +25,7 @@ import utn.frsf.ofa.cursojava.tp.integrador.servicio.RecetaService;
  */
 
 // TODO: definir anotacion de ambito 
+@SessionScoped
 @Named("recetaController")
 public class RecetaController implements Serializable {
 
@@ -37,9 +38,14 @@ public class RecetaController implements Serializable {
     private Receta recetaSeleccionada;
     private Autor autorSeleccionado;
     private List<Receta> listaRecetas;
-
     private DualListModel<Ingrediente> ingredientesDisponibles;
     
+    //VARIABLES PARA LA BUSQUEDA
+    private Double precioMinimo=50.0;
+    private Double precioMaximo=60.0;
+    private Autor autorBuscado;
+    private Ingrediente ingredienteBuscado;
+
     public Receta getRecetaSeleccionada() {
         return recetaSeleccionada;
     }
@@ -61,6 +67,7 @@ public class RecetaController implements Serializable {
     @PostConstruct
     public void init() {
         this.recetaSeleccionada = null;
+        //this.recetaSeleccionada=new Receta();
         this.listaRecetas = recetaSrv.listar();
         List<Ingrediente> origen = ingredienteSrv.listar();
         List<Ingrediente> destino = new ArrayList<Ingrediente>();
@@ -80,6 +87,10 @@ public class RecetaController implements Serializable {
         // TODO completar el metodo guardar
         // setear el autor de la receta seleccionada
         // invocar al metodo qeu guarda la receta
+        
+        recetaSeleccionada.setAutor(this.autorSeleccionado);
+        Receta rec = this.recetaSrv.guardar(recetaSeleccionada);
+        this.listaRecetas.add(rec);        
         this.recetaSeleccionada = null;
         return null;
     }
@@ -91,12 +102,55 @@ public class RecetaController implements Serializable {
         return null;
     }
 
+   
+
+    //Setters y Getters para las variables de busqueda
+    public void setIngredienteBuscado(Ingrediente ingredienteBuscado) {    
+        this.ingredienteBuscado = ingredienteBuscado;
+    }
+    
+    public Ingrediente getIngredienteBuscado() {
+        return ingredienteBuscado;
+    }
+    
     public Autor getAutorSeleccionado() {
         return autorSeleccionado;
     }
 
     public void setAutorSeleccionado(Autor autorSeleccionado) {
         this.autorSeleccionado = autorSeleccionado;
+    }
+    public Double getPrecioMinimo(){    
+        return precioMinimo;
+    }
+
+    public void setPrecioMinimo(Double precioMinimo) {
+        this.precioMinimo = precioMinimo;
+    }
+
+    public Double getPrecioMaximo() {
+        return precioMaximo;
+    }
+
+    public void setPrecioMaximo(Double precioMaximo) {
+        this.precioMaximo = precioMaximo;
+    }
+
+    public Autor getAutorBuscado() {
+        return autorBuscado;
+    }
+
+    public void setAutorBuscado(Autor autorBuscado) {
+        this.autorBuscado = autorBuscado;
+    }
+    //FIN etters y Getters para las variables de busqueda
+ 
+    public void buscarRecetas() {
+        System.out.println("Buscando Recetas............");
+        //System.out.println("Precio:" + this.recetaSeleccionada.getPrecio());
+        System.out.println("Valor Minimo:" + this.precioMinimo.toString());
+        System.out.println("Valor Maximo:" + this.precioMaximo.toString());
+        System.out.println("Autor:" + this.autorBuscado.getId().toString() +"-"+ this.autorBuscado.getNombre());
     }
 
     

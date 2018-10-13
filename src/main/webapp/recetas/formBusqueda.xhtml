@@ -2,22 +2,50 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:form id="frmDatosAutores">
+    <h:form id="frmDatosRecetas">
         <div class="p-grid">
             <div class="p-col-12" >
-                <h2>Informacion de Autor</h2>
+                <h2>Informacion de Recetas</h2>
             </div>
-            <div class="p-col-2" >
-                <p:outputLabel for="nombreAutor" value="Nombre Autor:" />
-                <p:inputText id="nombreAutor" required="true" value="#{autorController.autorSeleccionado.nombre}" disabled="#{empty autorController.autorSeleccionado}"/>
-            </div>
-            <div class="p-col-2" >
-                <p:commandButton value="Guardar" action="#{autorController.guardar}" update="frmDatosAutores frmListaAutores" disabled="#{empty autorController.autorSeleccionado}"></p:commandButton>
+            
+            <div class="p-col-3" >
+                    <p:outputLabel for="precioMinimo" value="Precio Minimo" />
             </div>
             <div class="p-col-3" >
-                <p:commandButton value="Nuevo" action="#{autorController.nuevo()}" update="frmDatosAutores" disabled="#{not empty autorController.autorSeleccionado}"></p:commandButton>
+                <p:inputText id="precioMinimo" required="true" value="#{recetaController.precioMinimo}" />
+            </div>
+            <div class="p-col-3" >
+                    <p:outputLabel for="precioMaximo" value="Precio Maximo" />
+            </div>
+            <div class="p-col-3" >
+                <p:inputText id="precioMaximo" required="true" value="#{recetaController.precioMaximo}" />
+            </div>
+            
+            <div class="p-col-3" >
+                <p:outputLabel value="Autor" for="autor"></p:outputLabel>
+            </div>
+            <div class="p-col-3" >
+                <p:selectOneMenu id="autor" value="#{recetaController.autorBuscado}" panelStyle="width:220px" 
+                                     effect="fade" style="width:200px" converter="autorConverter">
+                        <f:selectItems value="#{autorController.listaAutores}" var="unAutorBuscado" itemLabel="#{unAutorBuscado.nombre}" itemValue="#{unAutorBuscado}" />
+                </p:selectOneMenu>                
+            </div>
+            
+            <div class="p-col-3" >
+                <p:outputLabel value="Ingrediente" for="ingrediente"></p:outputLabel>
+            </div>
+            <div class="p-col-3" >
+                <p:selectOneMenu id="ingrediente" value="#{recetaController.ingredienteBuscado}" panelStyle="width:220px" 
+                                     effect="fade" style="width:200px" converter="ingredienteConverter">
+                    <f:selectItems value="#{ingredienteController.listaIngredientes}" var="unIngredienteBuscado" itemLabel="#{unIngredienteBuscado.descripcion}" itemValue="#{unIngredienteBuscado}" />
+                </p:selectOneMenu>                
+            </div>
+            
+            <div class="p-col-2" >
+                <p:commandButton value="Buscar" action="#{recetaController.buscarRecetas}" update="frmDatosRecetas frmListaRecetas" ></p:commandButton>
             </div>                
         </div>
     </h:form>
