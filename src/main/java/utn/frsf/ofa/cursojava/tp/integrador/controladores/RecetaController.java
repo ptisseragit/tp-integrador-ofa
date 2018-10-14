@@ -48,6 +48,7 @@ public class RecetaController implements Serializable {
     private Ingrediente ingredienteBuscado;
     private Date fechaDesde;
     private Date fechaHasta;
+    private int tipoBusqueda;
 
     public Receta getRecetaSeleccionada() {
         return recetaSeleccionada;
@@ -161,6 +162,16 @@ public class RecetaController implements Serializable {
     public void setFechaHasta(Date fechaHasta) {
         this.fechaHasta = fechaHasta;
     }
+
+    public int getTipoBusqueda() {
+        return tipoBusqueda;
+    }
+
+    public void setTipoBusqueda(int tipoBusqueda) {
+        this.tipoBusqueda = tipoBusqueda;
+    }
+    
+    
     //FIN etters y Getters para las variables de busqueda
  
     public String buscarRecetas() {

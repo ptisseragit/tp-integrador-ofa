@@ -58,21 +58,11 @@ public class RecetaService {
         //b. Fecha inicial y final de creación de receta
         //c. Autor
         //d. Ingrediente
-        
-        /*return em.createQuery("SELECT i FROM Receta r JOIN r.ingredientes i WHERE r.id = :P_ID_RECETA")
-                .setParameter("P_ID_RECETA", id)
-                .getResultList();*/
-        
-        //return em.createQuery("SELECT r FROM Receta r JOIN r.ingredientes i JOIN r.autor a WHERE r.ingredientes.descripcion=:P_DESC AND r.autor.nombre=:P_NOMBRE AND r.fechaCreacion BETWEEN :P_FDESDE AND :P_FHASTA AND r.precio BETWEEN :P_PINICIAL AND :P_FINAL")
-        //        .setParameter("P_DESC", i.getDescripcion()).setParameter("P_NOMBRE", a.getNombre())
-        //        .setParameter("P_FDESDE",fMin, TemporalType.DATE).setParameter("P_FHASTA", fMax, TemporalType.DATE)
-        //        .setParameter("P_PINICIAL", precioMin).setParameter("P_PFINAL", precioMax).getResultList();
-        
-  
+        System.out.println("Aquí deberia realizar la busqueda y devolver lista ..."); 
         return em.createQuery("SELECT r FROM Receta r WHERE r.precio > :PMINIMO ")
             .setParameter("PMINIMO", precioMin).getResultList();
         
-        //System.out.println("Aquí deberia realizar la busqueda y devolver lista ...");
+        
         //return null;
     }
 
