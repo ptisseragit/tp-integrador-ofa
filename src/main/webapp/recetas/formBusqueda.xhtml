@@ -55,17 +55,7 @@
                 <p:inputMask id="fechaHasta" value="#{recetaController.fechaHasta}" mask="99/99/9999" >  </p:inputMask>
             </div>
             
-             <div class="p-col-3" >
-                <p:outputLabel value="Buscar Por:" for="comboBusqueda"></p:outputLabel>
-            </div>
-            <div class="p-col-3" >
-                <h:selectOneMenu id="comboBusqueda" value = "#{recetaController.tipoBusqueda}"> 
-                    <f:selectItem itemValue = "1" itemLabel = "Menor a (Precio Minimo)" /> 
-                    <f:selectItem itemValue = "2" itemLabel = "Con Ingrediente (Ingrediente)" />
-                    <f:selectItem itemValue = "3" itemLabel = "Del Autor (Autor)" /> 
-                    <f:selectItem itemValue = "4" itemLabel = "Todas las opciones" />
-                </h:selectOneMenu> 	
-            </div>
+            
             
             <div class="p-col-12" >
                 <p:commandButton value="Buscar" action="#{recetaController.buscarRecetas}" styleClass="btn btn-primary" update="frmDatosRecetas frmListaRecetas" ></p:commandButton>
