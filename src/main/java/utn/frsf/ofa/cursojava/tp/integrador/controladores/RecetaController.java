@@ -74,7 +74,7 @@ public class RecetaController implements Serializable {
         this.listaRecetas = recetaSrv.listar();
         List<Ingrediente> origen = ingredienteSrv.listar();
         List<Ingrediente> destino = new ArrayList<Ingrediente>();
-        this.ingredientesDisponibles = new DualListModel<>(origen, destino);        
+        this.ingredientesDisponibles = new DualListModel<>(origen, destino); 
     }
 
     public DualListModel<Ingrediente> getIngredientesDisponibles() {
@@ -104,8 +104,6 @@ public class RecetaController implements Serializable {
         this.ingredientesDisponibles.setTarget(new ArrayList<Ingrediente>());
         return null;
     }
-
-   
 
     //Setters y Getters para las variables de busqueda
     public void setIngredienteBuscado(Ingrediente ingredienteBuscado) {    
@@ -165,13 +163,14 @@ public class RecetaController implements Serializable {
     }
     //FIN etters y Getters para las variables de busqueda
  
-    public void buscarRecetas() {
+    public String buscarRecetas() {
         System.out.println("Buscando Recetas .............");
         System.out.println("Valor Minimo:" + this.precioMinimo.toString());
         System.out.println("Valor Maximo:" + this.precioMaximo.toString());
         System.out.println("Autor:" + this.autorBuscado.getId().toString() +"-"+ this.autorBuscado.getNombre());
         //System.out.println("Ingrediente:" + this.ingredienteBuscado.getId().toString() +"-"+ this.ingredienteBuscado.getDescripcion());
-        this.recetaSrv.busquedaAvanzada(autorBuscado, ingredienteBuscado, precioMinimo, precioMaximo, fechaDesde, fechaDesde);
+        this.listaRecetas=this.recetaSrv.busquedaAvanzada(autorBuscado, ingredienteBuscado, precioMinimo, precioMaximo, fechaDesde, fechaDesde);
+        return "buscarReceta";
     }
 
     
