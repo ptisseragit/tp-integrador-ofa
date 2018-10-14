@@ -29,7 +29,7 @@ public class AutorConverter  implements Converter {
 
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object t) {
-        System.out.println("CONVERTIR autor "+t.toString());
+        //System.out.println("CONVERTIR autor "+t.toString());
         Autor a = (Autor) t;
         return a.getId()+";"+a.getNombre();
     }

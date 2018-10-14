@@ -2,6 +2,7 @@ package utn.frsf.ofa.cursojava.tp.integrador.controladores;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -45,6 +46,8 @@ public class RecetaController implements Serializable {
     private Double precioMaximo=60.0;
     private Autor autorBuscado;
     private Ingrediente ingredienteBuscado;
+    private Date fechaDesde;
+    private Date fechaHasta;
 
     public Receta getRecetaSeleccionada() {
         return recetaSeleccionada;
@@ -120,6 +123,7 @@ public class RecetaController implements Serializable {
     public void setAutorSeleccionado(Autor autorSeleccionado) {
         this.autorSeleccionado = autorSeleccionado;
     }
+    
     public Double getPrecioMinimo(){    
         return precioMinimo;
     }
@@ -143,14 +147,31 @@ public class RecetaController implements Serializable {
     public void setAutorBuscado(Autor autorBuscado) {
         this.autorBuscado = autorBuscado;
     }
+
+    public Date getFechaDesde() {
+        return fechaDesde;
+    }
+
+    public void setFechaDesde(Date fechaDesde) {
+        this.fechaDesde = fechaDesde;
+    }
+
+    public Date getFechaHasta() {
+        return fechaHasta;
+    }
+
+    public void setFechaHasta(Date fechaHasta) {
+        this.fechaHasta = fechaHasta;
+    }
     //FIN etters y Getters para las variables de busqueda
  
     public void buscarRecetas() {
-        System.out.println("Buscando Recetas............");
-        //System.out.println("Precio:" + this.recetaSeleccionada.getPrecio());
+        System.out.println("Buscando Recetas .............");
         System.out.println("Valor Minimo:" + this.precioMinimo.toString());
         System.out.println("Valor Maximo:" + this.precioMaximo.toString());
         System.out.println("Autor:" + this.autorBuscado.getId().toString() +"-"+ this.autorBuscado.getNombre());
+        //System.out.println("Ingrediente:" + this.ingredienteBuscado.getId().toString() +"-"+ this.ingredienteBuscado.getDescripcion());
+        this.recetaSrv.busquedaAvanzada(autorBuscado, ingredienteBuscado, precioMinimo, precioMaximo, fechaDesde, fechaDesde);
     }
 
     

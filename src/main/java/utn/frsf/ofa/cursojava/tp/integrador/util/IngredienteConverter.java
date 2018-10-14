@@ -24,12 +24,16 @@ public class IngredienteConverter  implements Converter {
         i.setId(Integer.valueOf(datos[0]));
         i.setDescripcion(datos[1]);
         i.setCosto(Double.valueOf(datos[2]));
+        System.out.println("en objeto "+i.toString()+ " < "+string+">");
         return i;
     }
 
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object t) {
-        return t.toString();
+        //System.out.println("CONVERTIR ingrediente "+t.toString());
+        Ingrediente i = (Ingrediente) t;
+        return i.getId()+";"+i.getDescripcion()+";"+i.getCosto();
+        //return t.toString();
     }
     
 }

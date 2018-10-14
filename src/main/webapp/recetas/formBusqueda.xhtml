@@ -15,7 +15,7 @@
                     <p:outputLabel for="precioMinimo" value="Precio Minimo" />
             </div>
             <div class="p-col-3" >
-                <p:inputText id="precioMinimo" required="true" value="#{recetaController.precioMinimo}" />
+                <p:inputText id="precioMinimo" converter="#{Double}" value="#{recetaController.precioMinimo}" />
             </div>
             <div class="p-col-3" >
                     <p:outputLabel for="precioMaximo" value="Precio Maximo" />
@@ -25,28 +25,42 @@
             </div>
             
             <div class="p-col-3" >
+                <p:outputLabel value="Ingrediente" for="ingrediente"></p:outputLabel>
+            </div>
+            <div class="p-col-3" >
+                <p:selectOneMenu id="ingrediente" value="#{recetaController.ingredienteBuscado}" panelStyle="width:220px" effect="fade" style="width:200px" converter="ingredienteConverter">                    
+                    <f:selectItems  value="#{ingredienteController.listaIngredientes}" var="unIngredienteBuscado" itemLabel="#{unIngredienteBuscado.descripcion}" itemValue="#{unIngredienteBuscado}" />
+                </p:selectOneMenu>              
+            </div>
+         
+            <div class="p-col-3" >
                 <p:outputLabel value="Autor" for="autor"></p:outputLabel>
             </div>
             <div class="p-col-3" >
-                <p:selectOneMenu id="autor" value="#{recetaController.autorBuscado}" panelStyle="width:220px" 
-                                     effect="fade" style="width:200px" converter="autorConverter">
+                <p:selectOneMenu id="autor" value="#{recetaController.autorBuscado}" panelStyle="width:220px" effect="fade" style="width:200px" converter="autorConverter">
                         <f:selectItems value="#{autorController.listaAutores}" var="unAutorBuscado" itemLabel="#{unAutorBuscado.nombre}" itemValue="#{unAutorBuscado}" />
                 </p:selectOneMenu>                
             </div>
             
+                   
+            
             <div class="p-col-3" >
-                <p:outputLabel value="Ingrediente" for="ingrediente"></p:outputLabel>
+                <p:outputLabel value="Fecha Desde: " for="fechaDesde"></p:outputLabel>
             </div>
             <div class="p-col-3" >
-                <p:selectOneMenu id="ingrediente" value="#{recetaController.ingredienteBuscado}" panelStyle="width:220px" 
-                                     effect="fade" style="width:200px" converter="ingredienteConverter">
-                    <f:selectItems value="#{ingredienteController.listaIngredientes}" var="unIngredienteBuscado" itemLabel="#{unIngredienteBuscado.descripcion}" itemValue="#{unIngredienteBuscado}" />
-                </p:selectOneMenu>                
+                <p:inputMask id="fechaDesde" value="#{recetaController.fechaDesde}" mask="99/99/9999" >  </p:inputMask>
+            </div> 
+            <div class="p-col-3" >
+                <p:outputLabel value="Fecha Hasta: " for="fechaHasta"></p:outputLabel>
+            </div>
+            <div class="p-col-3" >
+                <p:inputMask id="fechaHasta" value="#{recetaController.fechaHasta}" mask="99/99/9999" >  </p:inputMask>
             </div>
             
-            <div class="p-col-2" >
-                <p:commandButton value="Buscar" action="#{recetaController.buscarRecetas}" update="frmDatosRecetas frmListaRecetas" ></p:commandButton>
-            </div>                
+            <div class="p-col-12" >
+                <p:commandButton value="Buscar" action="#{recetaController.buscarRecetas}" styleClass="btn btn-primary" update="frmDatosRecetas frmListaRecetas" ></p:commandButton>
+            </div>
+                            
         </div>
     </h:form>
 </ui:composition>
