@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 import utn.frsf.ofa.cursojava.tp.integrador.logica.RecetaLogica;
 import utn.frsf.ofa.cursojava.tp.integrador.modelo.Autor;
 import utn.frsf.ofa.cursojava.tp.integrador.modelo.Ingrediente;
@@ -51,19 +52,58 @@ public class RecetaService {
                 .getResultList();
     }
     
-    public List<Receta> busquedaAvanzada(Autor a, Ingrediente i, Double precioMin, Double precioMax,Date fMin,Date fMax){        
+    public List<Receta> busquedaAvanzada(int tipoBusqueda, Autor aut, Ingrediente ing, Double precioMin, Double precioMax,Date fMin,Date fMax){        
     //public List<Receta> busquedaAvanzada(AutorService a, Ingrediente i, Double precioMin, Double precioMax,Date fMin,Date fMax){        
         
         //a. Precio mínimo y máximo
         //b. Fecha inicial y final de creación de receta
         //c. Autor
         //d. Ingrediente
-        System.out.println("Aquí deberia realizar la busqueda y devolver lista ..."); 
-        return em.createQuery("SELECT r FROM Receta r WHERE r.precio > :PMINIMO ")
-            .setParameter("PMINIMO", precioMin).getResultList();
+        List<Receta> listaRecetas;
         
+        switch (tipoBusqueda){
+
+            case 1: {
+                listaRecetas=em.createQuery("SELECT r FROM Receta r WHERE r.precio > :PMINIMO AND r.precio < :PMAXIMO")
+                        .setParameter("PMINIMO", precioMin)
+                        .setParameter("PMAXIMO",precioMax).getResultList();
+                break;
+            }
+            case 2: {
+                listaRecetas= em.createQuery("SELECT r FROM Receta r JOIN r.ingredientes i WHERE i.id = :INGREDIENTE ")
+                .setParameter("INGREDIENTE", ing.getId()).getResultList();
+                break;
+            }
+            case 3: {
+                listaRecetas= em.createQuery("SELECT r FROM Receta r JOIN r.autor a WHERE a.id = :AUTOR ")
+                .setParameter("AUTOR", aut.getId()).getResultList();
+                break;
+            }
+            case 4:{
+                
+                System.out.println("Consulta:" + em.createQuery("SELECT r FROM Receta r WHERE r.fechaCreacion BETWEEN :FMINIMO AND :FMAXIMO")
+                        .setParameter("FMINIMO", fMin)
+                        .setParameter("FMAXIMO", fMax).toString());
+                listaRecetas= (List<Receta>)em.createQuery("SELECT r FROM Receta r WHERE r.fechaCreacion BETWEEN :FMINIMO AND :FMAXIMO")
+                        .setParameter("FMINIMO", fMin)
+                        .setParameter("FMAXIMO", fMax).getResultList();
+                break;
+            }
+            default: {
+                listaRecetas= em.createQuery("SELECT r FROM Receta r JOIN r.ingredientes i JOIN r.autor a WHERE r.precio > :PMINIMO AND r.precio<:PMAXIMO AND a.id = :AUTOR AND i.id = :INGREDIENTE ")
+                .setParameter("PMINIMO", precioMin)
+                .setParameter("PMAXIMO",precioMax)
+                .setParameter("AUTOR", aut.getId())
+                .setParameter("INGREDIENTE", ing.getId()).getResultList();
+            }
+            
+        }
+  
+        //return em.createQuery("SELECT r FROM Receta r WHERE r.precio > :PMINIMO ")
+        //    .setParameter("PMINIMO", precioMin).getResultList();
         
-        //return null;
+        //System.out.println("Aquí deberia realizar la busqueda y devolver lista ...");
+        return listaRecetas;
     }
 
 }

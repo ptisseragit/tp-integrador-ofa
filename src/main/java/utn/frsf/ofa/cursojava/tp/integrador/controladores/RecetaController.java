@@ -1,6 +1,8 @@
 package utn.frsf.ofa.cursojava.tp.integrador.controladores;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +44,8 @@ public class RecetaController implements Serializable {
     private DualListModel<Ingrediente> ingredientesDisponibles;
     
     //VARIABLES PARA LA BUSQUEDA
-    private Double precioMinimo=50.0;
-    private Double precioMaximo=60.0;
+    private Double precioMinimo;
+    private Double precioMaximo;
     private Autor autorBuscado;
     private Ingrediente ingredienteBuscado;
     private Date fechaDesde;
@@ -70,12 +72,22 @@ public class RecetaController implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.recetaSeleccionada = null;
-        //this.recetaSeleccionada=new Receta();
-        this.listaRecetas = recetaSrv.listar();
-        List<Ingrediente> origen = ingredienteSrv.listar();
-        List<Ingrediente> destino = new ArrayList<Ingrediente>();
-        this.ingredientesDisponibles = new DualListModel<>(origen, destino); 
+        try {
+            this.recetaSeleccionada = null;
+            //this.recetaSeleccionada=new Receta();
+            this.listaRecetas = recetaSrv.listar();
+            List<Ingrediente> origen = ingredienteSrv.listar();
+            List<Ingrediente> destino = new ArrayList<Ingrediente>();
+            this.ingredientesDisponibles = new DualListModel<>(origen, destino);
+            precioMinimo=0.0;
+            precioMaximo=150.0;
+            SimpleDateFormat formaFecha = new SimpleDateFormat("yyyy-MM-dd");
+            String strFecha = "2010-01-30";
+            fechaDesde=formaFecha.parse(strFecha);
+            fechaHasta=new Date();
+        } catch (ParseException ex) {
+            //Logger.getLogger(RecetaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public DualListModel<Ingrediente> getIngredientesDisponibles() {
@@ -94,8 +106,12 @@ public class RecetaController implements Serializable {
         
         recetaSeleccionada.setAutor(this.autorSeleccionado);
         Receta rec = this.recetaSrv.guardar(recetaSeleccionada);
-        this.listaRecetas.add(rec);        
+        
+        //this.listaRecetas.add(rec);         
+        //QUEDAN RECTAS REPETIDAS EN LA VISTA AL MOMENTO DE HACER UNA MODIFICACION SOBRE UNA RECTA
+        this.listaRecetas = recetaSrv.listar();
         this.recetaSeleccionada = null;
+        
         return null;
     }
 
@@ -103,6 +119,8 @@ public class RecetaController implements Serializable {
         this.recetaSeleccionada = new Receta();
         this.recetaSeleccionada.setIngredientes(new ArrayList<>());
         this.ingredientesDisponibles.setTarget(new ArrayList<Ingrediente>());
+        
+        this.ingredientesDisponibles.setSource(ingredienteSrv.listar());
         return null;
     }
 
@@ -175,14 +193,16 @@ public class RecetaController implements Serializable {
     //FIN etters y Getters para las variables de busqueda
  
     public String buscarRecetas() {
-        System.out.println("Buscando Recetas .............");
-        System.out.println("Valor Minimo:" + this.precioMinimo.toString());
-        System.out.println("Valor Maximo:" + this.precioMaximo.toString());
-        System.out.println("Autor:" + this.autorBuscado.getId().toString() +"-"+ this.autorBuscado.getNombre());
-        //System.out.println("Ingrediente:" + this.ingredienteBuscado.getId().toString() +"-"+ this.ingredienteBuscado.getDescripcion());
-        this.listaRecetas=this.recetaSrv.busquedaAvanzada(autorBuscado, ingredienteBuscado, precioMinimo, precioMaximo, fechaDesde, fechaDesde);
-        return "buscarReceta";
+            System.out.println("Buscando Recetas .............");
+            System.out.println("Valor Minimo:" + this.precioMinimo.toString());
+            System.out.println("Valor Maximo:" + this.precioMaximo.toString());
+            System.out.println("Autor:" + this.autorBuscado.getId().toString() +"-"+ this.autorBuscado.getNombre());
+            System.out.println("Fecha Minimo:" + this.fechaDesde.toString());
+            System.out.println("Fecha Maximo:" + this.fechaHasta.toString());
+            System.out.println("Tipo busqueda" + this.tipoBusqueda);
+  
+            this.listaRecetas=this.recetaSrv.busquedaAvanzada(tipoBusqueda, autorBuscado, ingredienteBuscado, precioMinimo, precioMaximo,fechaDesde, fechaHasta);
+            return "buscarReceta";
     }
 
-    
 }

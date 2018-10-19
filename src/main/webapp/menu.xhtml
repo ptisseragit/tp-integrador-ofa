@@ -6,12 +6,16 @@
     <p:menu toggleable="true">
         <p:submenu label="Ingredientes">
             <p:menuitem value="Alta" outcome="altaIngrediente" ajax="false" icon="ui-icon-disk" />
-            <p:menuitem value="Lista" outcome="listaIngrediente" ajax="false" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Lista" outcome="listaIngrediente" ajax="false" icon="ui-icon-note"/>
         </p:submenu>
         <p:submenu label="Recetas">
             <p:menuitem value="Alta" outcome="altaReceta" ajax="false" icon="ui-icon-home"/>
-            <p:menuitem value="Lista" outcome="listaReceta" ajax="false" icon="ui-icon-star"/>
-            <p:menuitem value="Busqueda" outcome="buscarReceta" ajax="false" icon="ui-icon-star"/>
+            <p:menuitem value="Lista" outcome="listaReceta" ajax="false" icon="ui-icon-note"/>
+            <p:menuitem value="Busqueda" outcome="buscarReceta" ajax="false" icon="ui-icon-search"/>
+        </p:submenu>
+        <p:submenu label="Pedidos">
+            <p:menuitem value="Alta" outcome="altaPedido" ajax="false" />
+            <p:menuitem value="Lista" outcome="listaPedido" ajax="false" icon="ui-icon-note"/>
         </p:submenu>
         <p:submenu label="Autores">
             <p:menuitem value="Gestion" outcome="gestionAutores" ajax="false" icon="ui-icon-close"/>

@@ -44,6 +44,7 @@ public class AutorController implements Serializable{
     }
 
     public List<Autor> getListaAutores() {
+        this.listaAutores = servicioAutores.listar();
         return listaAutores;
     }
 
@@ -54,6 +55,7 @@ public class AutorController implements Serializable{
     public String guardar(){
         Autor tmp = this.servicioAutores.guardar(autorSeleccionado);
         this.listaAutores.add(tmp);
+        this.listaAutores = servicioAutores.listar();
         this.autorSeleccionado = null;
         return null;
     }

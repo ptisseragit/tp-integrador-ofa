@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="p-col-12" >
-                    <p:commandButton value="Guardar" action="#{recetaController.guardar}" ajax="false" disabled="#{empty recetaController.recetaSeleccionada}"></p:commandButton>
+                    <p:commandButton value="Guardar" action="#{recetaController.guardar}" update="frmDatosReceta" disabled="#{empty recetaController.recetaSeleccionada}"></p:commandButton>
                 </div>
                 <div class="p-col-12" >
                     <p:commandButton value="Nuevo" action="#{recetaController.nuevo}" update="frmDatosReceta" disabled="#{not empty recetaController.recetaSeleccionada}"></p:commandButton>

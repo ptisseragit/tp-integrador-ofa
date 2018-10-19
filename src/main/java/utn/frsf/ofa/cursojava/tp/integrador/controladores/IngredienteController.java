@@ -43,6 +43,7 @@ public class IngredienteController implements Serializable{
     }
 
     public List<Ingrediente> getListaIngredientes() {
+        this.listaIngredientes = servicioIngrediente.listar();
         return listaIngredientes;
     }
 
